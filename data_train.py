@@ -29,9 +29,6 @@ y_test = y_test.iloc[:, 0]
 # Count number of occurrences of each value in array fron zero to large...
 
 
-# To get ratio
-
-
 # to reverse ratio to add it as weights for model
 val_count = 1 - (np.bincount(y_train) / len(y_train))
 val_count = val_count / np.sum(val_count) # To nurmalize
