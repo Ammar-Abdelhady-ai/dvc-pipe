@@ -1,6 +1,6 @@
 import numpy as np
 from imblearn.over_sampling import SMOTE
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
@@ -29,9 +29,6 @@ y_test = y_test.iloc[:, 0]
 # Count number of occurrences of each value in array fron zero to large...
 
 
-# To get ratio
-
-
 # to reverse ratio to add it as weights for model
 val_count = 1 - (np.bincount(y_train) / len(y_train))
 val_count = val_count / np.sum(val_count) # To nurmalize
@@ -47,12 +44,11 @@ smote = SMOTE(sampling_strategy=0.8)
 
 X_train_resampled, y_train_resampled = smote.fit_resample(X_train_final, y_train)
 
-# RandomForestClassifier(class_weight=dict_weight)
 
 combined_dict = {}
 def train_model(X_train, y_train, plot_name="", class_weight=None):
     global clf_name
-    clf = RandomForestClassifier(n_estimators=300, max_depth=15, random_state=45, criterion="gini", class_weight=class_weight)
+    clf = DecisionTreeClassifier(max_depth=15, splitter="best", criterion="gini", class_weight=class_weight)
     clf.fit(X_train, y_train)
 
     y_test_predict = clf.predict(X_test_final)
