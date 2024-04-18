@@ -1,6 +1,6 @@
 import numpy as np
 from imblearn.over_sampling import SMOTE
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 import seaborn as sns
 from PIL import Image
@@ -48,7 +48,7 @@ X_train_resampled, y_train_resampled = smote.fit_resample(X_train_final, y_train
 combined_dict = {}
 def train_model(X_train, y_train, plot_name="", class_weight=None):
     global clf_name
-    clf = DecisionTreeClassifier(max_depth=15, splitter="best", criterion="gini", class_weight=class_weight)
+    clf = RandomForestClassifier(n_estimators=300, max_depth=15, random_state=45, criterion="gini", class_weight=class_weight)
     clf.fit(X_train, y_train)
 
     y_test_predict = clf.predict(X_test_final)
