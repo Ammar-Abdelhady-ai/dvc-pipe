@@ -1,0 +1,34 @@
+stages:
+  preparetion:
+    cmd: python data_prep.py
+    deps:
+      - data_prep.py
+      - dataset.csv
+    outs:
+      - outs/prepared_df.csv
+
+  process:
+    cmd: python data_process.py
+    deps:
+      - data_process.py
+      - outs/prepared_df.csv
+    outs:
+      - outs/process_test_x.csv
+      - outs/process_test_y.csv
+      - outs/process_train_x.csv
+      - outs/process_train_y.csv
+
+  train:
+    cmd: python data_train.py
+    deps:
+      - data_train.py
+      - outs/process_test_x.csv
+      - outs/process_test_y.csv
+      - outs/process_train_x.csv
+      - outs/process_train_y.csv
+    outs:
+      - Confusion_Matrix.png
+
+    metrics:
+      - metrics.json:
+         cache: false

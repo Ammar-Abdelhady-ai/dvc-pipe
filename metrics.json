@@ -1,0 +1,1 @@
+{"F1-Test-without-imbalance": 0.6149162861491628, "Accuracy-Test-without-imbalance": 0.8733733733733734, "F1-Test-with-class-weight": 0.6151603498542274, "Accuracy-Test-with-class-weight": 0.8678678678678678, "F1-Test-with-SMOT": 0.633245382585752, "Accuracy-Test-with-SMOT": 0.8608608608608609}

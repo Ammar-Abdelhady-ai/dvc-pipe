@@ -1,0 +1,78 @@
+schema: '2.0'
+stages:
+  preparetion:
+    cmd: python data_prep.py
+    deps:
+    - path: data_prep.py
+      hash: md5
+      md5: eeb7f985bf99ff80e2380c86c7720eae
+      size: 406
+    - path: dataset.csv
+      hash: md5
+      md5: 7321aa9a1e24a9e139f42124f736b415
+      size: 674857
+    outs:
+    - path: outs/prepared_df.csv
+      hash: md5
+      md5: 883886ae55d2deb5b1128a5bc40eea4d
+      size: 478635
+  process:
+    cmd: python data_process.py
+    deps:
+    - path: data_process.py
+      hash: md5
+      md5: f1f787ebb58d2b520d3087fb8995a5c5
+      size: 2703
+    - path: outs/prepared_df.csv
+      hash: md5
+      md5: 883886ae55d2deb5b1128a5bc40eea4d
+      size: 478635
+    outs:
+    - path: outs/process_test_x.csv
+      hash: md5
+      md5: 8115562bac99bc453a70bb5e5c3e00ad
+      size: 214959
+    - path: outs/process_test_y.csv
+      hash: md5
+      md5: 9a438f4a3f90f043b1f472b2f56f3ac7
+      size: 6002
+    - path: outs/process_train_x.csv
+      hash: md5
+      md5: 68a26fc03a25e856ad33ba794653e222
+      size: 858640
+    - path: outs/process_train_y.csv
+      hash: md5
+      md5: 5463a555d041851791d9410a0444c4b2
+      size: 23978
+  train:
+    cmd: python data_train.py
+    deps:
+    - path: data_train.py
+      hash: md5
+      md5: 39445a355392d8decc5551ffae243275
+      size: 3216
+    - path: outs/process_test_x.csv
+      hash: md5
+      md5: 8115562bac99bc453a70bb5e5c3e00ad
+      size: 214959
+    - path: outs/process_test_y.csv
+      hash: md5
+      md5: 9a438f4a3f90f043b1f472b2f56f3ac7
+      size: 6002
+    - path: outs/process_train_x.csv
+      hash: md5
+      md5: 68a26fc03a25e856ad33ba794653e222
+      size: 858640
+    - path: outs/process_train_y.csv
+      hash: md5
+      md5: 5463a555d041851791d9410a0444c4b2
+      size: 23978
+    outs:
+    - path: Confusion_Matrix.png
+      hash: md5
+      md5: 89fa6e6c1569c8c21bde9e73ec033520
+      size: 14912
+    - path: metrics.json
+      hash: md5
+      md5: e4e0c4240884f6547cc96e582a5024a0
+      size: 295
