@@ -1,0 +1,37 @@
+name: churn-imbalanced-dvc-pipeline
+on: [push]
+permissions: write-all
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12.1'
+      - uses: iterative/setup-cml@v1
+
+
+      - name: Prepare Environment
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        run: |
+          # Your ML workflow goes here
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate Report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+
+          dvc repro
+          git fetch --prune
+          echo "## Metrics" > report.md
+          dvc metrics diff --md main >> report.md
+          echo "![](./Confusion_Matrix.png)" >> report.md
+          
+          cml comment create report.md
